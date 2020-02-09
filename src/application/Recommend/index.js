@@ -1,11 +1,11 @@
 import React from "react";
 import { Content } from "./style";
 import { connect } from "react-redux";
-import { forceCheck } from 'react-lazyload';
+import { forceCheck } from "react-lazyload";
 import * as actionTypes from "./store/actionCreators";
 import Slider from "../../components/slider";
 import Scroll from "../../components/scroll";
-import Loading from '../../baseUI/loading';
+import Loading from "../../baseUI/loading";
 import RecommendList from "../../components/list";
 
 //mock 数据
@@ -31,14 +31,14 @@ function Recommend(props) {
 
   const { getBannerDataDispatch, getRecommendListDataDispatch } = props;
 
-  React.useEffect (() => {
+  React.useEffect(() => {
     // 如果页面有数据，则不发请求
     //immutable 数据结构中长度属性 size
-    if (!bannerList.size){
-      getBannerDataDispatch ();
+    if (!bannerList.size) {
+      getBannerDataDispatch();
     }
-    if (!recommendList.size){
-      getRecommendListDataDispatch ();
+    if (!recommendList.size) {
+      getRecommendListDataDispatch();
     }
     //eslint-disable-next-line
   }, []);
@@ -50,8 +50,8 @@ function Recommend(props) {
     <Content>
       <Scroll className="list" onScroll={forceCheck}>
         <div>
-          <Slider bannerList={bannerList}></Slider>
-          <RecommendList recommendList={recommendList}></RecommendList>
+          <Slider bannerList={bannerListJS}></Slider>
+          <RecommendList recommendList={recommendListJS}></RecommendList>
         </div>
       </Scroll>
       {enterLoading ? <Loading /> : null}
@@ -64,7 +64,7 @@ const mapStateToProps = state => ({
   // 不要在这里将数据 toJS
   // 不然每次 diff 比对 props 的时候都是不一样的引用，还是导致不必要的重渲染，属于滥用 immutable
   bannerList: state.getIn(["recommend", "bannerList"]),
-  enterLoading: state.getIn (['recommend', 'enterLoading']),
+  enterLoading: state.getIn(["recommend", "enterLoading"]),
   recommendList: state.getIn(["recommend", "recommendList"])
 });
 
